@@ -68,6 +68,7 @@ def main():
 
     accuracy = model.score(x_test, y_test)
     run.log("Accuracy", float(accuracy))
-
+    os.makedirs('outputs',exist_ok=True)
+    joblib.dump(model,'outputs/best_hyperdrive_model.joblib')
 if __name__ == '__main__':
     main()
