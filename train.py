@@ -1,14 +1,17 @@
-from sklearn.linear_model import LogisticRegression
 import argparse
 import os
 import numpy as np
-from sklearn.metrics import mean_squared_error
 import joblib
+import pandas as pd
+
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
-import pandas as pd
+
 from azureml.core.run import Run
 from azureml.data.dataset_factory import TabularDatasetFactory
+
 def clean_data(data):
     # Dict for cleaning data
     months = {"jan":1, "feb":2, "mar":3, "apr":4, "may":5, "jun":6, "jul":7, "aug":8, "sep":9, "oct":10, "nov":11, "dec":12}
@@ -49,9 +52,6 @@ x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=10
 
 run = Run.get_context()
 
-
-    
-
 def main():
     # Add arguments to script
     parser = argparse.ArgumentParser()
@@ -70,5 +70,6 @@ def main():
     run.log("Accuracy", float(accuracy))
     os.makedirs('outputs',exist_ok=True)
     joblib.dump(model,'outputs/best_hyperdrive_model.joblib')
+    
 if __name__ == '__main__':
     main()
